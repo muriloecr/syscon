@@ -362,14 +362,26 @@ public class convei {
 		
 // linha GALERIA linha GALERIA linha GALERIA linha GALERIA linha GALERIA linha GALERIA
 		JLabel labgalvei = new JLabel("Galeria");
-		labgalvei.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labgalvei.setBounds(43, 511, 101, 35);
+		labgalvei.setFont(new Font("Tahoma", Font.BOLD, 36));
+		labgalvei.setBounds(88, 526, 150, 35);
 		frame.getContentPane().add(labgalvei);
 		
 		JTextArea maisvei_1 = new JTextArea();
 		maisvei_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		maisvei_1.setBounds(143, 511, 1302, 114);
+		maisvei_1.setBounds(276, 511, 1169, 114);
 		frame.getContentPane().add(maisvei_1);
+		
+// linha BOTÃO EDITAR GALERIA linha BOTÃO EDITAR GALERIA linha BOTÃO EDITAR GALERIA
+		JButton btngalvei = new JButton("Editar");
+		btnclivoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				conini tel = new conini();
+				tel.visivel();
+				frame.dispose();
+			}
+		});btngalvei.setFont(new Font("Tahoma", Font.BOLD, 36));
+		btngalvei.setBounds(43, 572, 223, 53);
+		frame.getContentPane().add(btngalvei);
 	}
 
 }
