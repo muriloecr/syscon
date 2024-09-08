@@ -38,8 +38,8 @@ create table Veiculo (
     vei_aces int(4),
 # ARMAZENA OS CLIENTES INTERESSADOS
 	vei_cli int(4),
-	vei_descricao varchar(250) not null
-    vei_gal gallery (20)
+	vei_descricao varchar(250) not null,
+    vei_gal longblob
 #   foreign key (vei_vis) references Cliente (cli_id)
 #	foreign key (vei_aces) references Acessorios (ace_id)
 #   foreign key (vei_res) references Cliente (cli_id)
