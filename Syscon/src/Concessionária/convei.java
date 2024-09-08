@@ -73,13 +73,12 @@ public class convei {
 			veiano = new JFormattedTextField(mask1);
 			MaskFormatter mask2 = new MaskFormatter("####");
 			veimod = new JFormattedTextField(mask2);
-			MaskFormatter mask3 = new MaskFormatter("###-####");
+			MaskFormatter mask3 = new MaskFormatter("***-****");
 			veiplaca = new JFormattedTextField(mask3);
 			MaskFormatter mask4 = new MaskFormatter("###.###");
 			veikm = new JFormattedTextField(mask4);
-			
-			MaskFormatter mask6 = new MaskFormatter("####");
-			cadveicli = new JFormattedTextField(mask6);
+			MaskFormatter mask5 = new MaskFormatter("####");
+			cadveicli = new JFormattedTextField(mask5);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO na formatação de Campos", "erro", JOptionPane.ERROR_MESSAGE);
 		}		
@@ -139,7 +138,7 @@ public class convei {
 		labanoveiform.setBounds(959, 119, 150, 28);
 		frame.getContentPane().add(labanoveiform);
 			
-		JTextArea veiano = new JTextArea();
+		//JTextArea veiano = new JTextArea();
 		veiano.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veiano.setBounds(1344, 105, 101, 35);
 		frame.getContentPane().add(veiano);
@@ -155,7 +154,7 @@ public class convei {
 		labmodveiform.setBounds(1223, 119, 150, 28);
 		frame.getContentPane().add(labmodveiform);
 			
-		JTextArea veimod = new JTextArea();
+		//JTextArea veimod = new JTextArea();
 		veimod.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veimod.setBounds(1079, 101, 111, 35);
 		frame.getContentPane().add(veimod);
@@ -203,7 +202,7 @@ public class convei {
 		labplacaveiform.setBounds(692, 180, 150, 28);
 		frame.getContentPane().add(labplacaveiform);
 		
-		JTextArea veiplaca = new JTextArea();
+		//JTextArea veiplaca = new JTextArea();
 		veiplaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veiplaca.setBounds(852, 162, 150, 35);
 		frame.getContentPane().add(veiplaca);
@@ -219,7 +218,7 @@ public class convei {
 		labkmveiform.setBounds(1076, 180, 150, 28);
 		frame.getContentPane().add(labkmveiform);
 		
-		JTextArea veikm = new JTextArea();
+		//JTextArea veikm = new JTextArea();
 		veikm.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veikm.setBounds(1298, 158, 147, 35);
 		frame.getContentPane().add(veikm);
