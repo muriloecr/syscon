@@ -37,17 +37,19 @@ public class bcodados {
 		String driver = "com.mysql.cj.jdbc.Driver";
 		try {
 
-// acessa o driver
+// carrega o driver na memória JDBC do MySQL
 			Class.forName(driver);
+// conecta o driver com a URL
 			this.connection = DriverManager.getConnection(servidor, usuario, senha);
-
+			
 // consultas
 				this.statement = this.connection.createStatement();
 			} catch (Exception e) {
 				System.out.println("ERROR: " + e.getMessage());
 		}
 	}
-
+	
+// verifica se a conexão foi estabelecida com sucesso
 	public boolean estaConectado() {
 		if (this.connection != null) {
 			return true;
@@ -61,7 +63,7 @@ public class bcodados {
 			String query = "Select * from contato";
 			this.resultset = this.statement.executeQuery(query);
 			while (this.resultset.next()) {
-				System.out.println("ID:" + this.resultset.getString("id") + "Nome: " + this.resultset.getString("nome")
+				System.out.println("ID: " + this.resultset.getString("id") + " Nome: " + this.resultset.getString("nome")
 						+ "Telefone: " + this.resultset.getString("telefone"));
 			}
 		} catch (Exception e) {
