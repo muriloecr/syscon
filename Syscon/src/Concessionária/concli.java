@@ -109,6 +109,22 @@ public class concli {
 		clicod.setBounds(229, 125, 160, 35);
 		frame.getContentPane().add(clicod);
 		
+// linha CONSULTOR CLIENTE linha CONSULTOR CLIENTE linha CONSULTOR CLIENTE	
+		JLabel labconcli = new JLabel("Consultor");
+		labconcli.setFont(new Font("Tahoma", Font.BOLD, 24));
+		labconcli.setBounds(597, 105, 183, 35);
+		frame.getContentPane().add(labconcli);
+		
+		JLabel labconcliform = new JLabel("formato 9999");
+		labconcliform.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		labconcliform.setBounds(597, 130, 203, 28);
+		frame.getContentPane().add(labconcliform);
+		
+		//JTextArea concod = new JTextArea();
+		concod.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		concod.setBounds(781, 116, 160, 35);
+		frame.getContentPane().add(concod);	
+		
 // linha NOME CLIENTE linha NOME CLIENTE linha NOME CLIENTE linha NOME CLIENTE
 		JLabel labnomecli = new JLabel("Nome");
 		labnomecli.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -122,7 +138,7 @@ public class concli {
 		
 		JTextArea clinome = new JTextArea();
 		clinome.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		clinome.setBounds(229, 178, 691, 35);
+		clinome.setBounds(229, 178, 712, 35);
 		frame.getContentPane().add(clinome);
 		
 // linha WHATS CLIENTE linha WHATS CLIENTE linha WHATS CLIENTE linha WHATS CLIENTE
@@ -140,71 +156,55 @@ public class concli {
 		cliwhats.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		cliwhats.setBounds(233, 242, 316, 35);
 		frame.getContentPane().add(cliwhats);
+			
+// linha VISITAS CLIENTE linha VISITAS CLIENTE linha VISITAS CLIENTE	
+		JLabel labviscli = new JLabel("Veículos visitados");
+		labviscli.setFont(new Font("Tahoma", Font.BOLD, 24));
+		labviscli.setBounds(45, 295, 220, 35);
+		frame.getContentPane().add(labviscli);
+		
+		JLabel labviscliform = new JLabel("formato 9999");
+		labviscliform.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		labviscliform.setBounds(45, 320, 203, 28);
+		frame.getContentPane().add(labviscliform);
+		
+		JTextArea clivis = new JTextArea();
+		clivis.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		clivis.setBounds(275, 302, 666, 35);
+		frame.getContentPane().add(clivis);
 		
 // linha CADASTRAR VEÍCULO linha CADASTRAR VEÍCULO linha CADASTRAR VEÍCULO
 		JLabel labadveicli = new JLabel("CAD Veículo");
 		labadveicli.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labadveicli.setBounds(580, 231, 183, 35);
+		labadveicli.setBounds(45, 349, 183, 35);
 		frame.getContentPane().add(labadveicli);
 		
 		JLabel labcadcliform = new JLabel("formato 9999");
 		labcadcliform.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		labcadcliform.setBounds(580, 256, 203, 28);
+		labcadcliform.setBounds(45, 374, 203, 28);
 		frame.getContentPane().add(labcadcliform);
 		
 		//JTextArea cadveicli = new JTextArea();
 		cadveicli.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		cadveicli.setBounds(764, 242, 160, 35);
+		cadveicli.setBounds(229, 360, 160, 35);
 		frame.getContentPane().add(cadveicli);
 		
 // linha EXCLUIR VEÍCULO linha EXCLUIR VEÍCULO linha EXCLUIR VEÍCULO
 		JLabel labexveicli = new JLabel("EXC Veículo");
 		labexveicli.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labexveicli.setBounds(580, 292, 183, 35);
+		labexveicli.setBounds(597, 349, 183, 35);
 		frame.getContentPane().add(labexveicli);
 		
 		JLabel labconcliform_1 = new JLabel("formato 9999");
 		labconcliform_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		labconcliform_1.setBounds(580, 317, 203, 28);
+		labconcliform_1.setBounds(597, 374, 203, 28);
 		frame.getContentPane().add(labconcliform_1);
 		
 		//JTextArea excveicli = new JTextArea();
 		excveicli.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		excveicli.setBounds(764, 303, 160, 35);
+		excveicli.setBounds(781, 360, 160, 35);
 		frame.getContentPane().add(excveicli);
-				
-// linha VENDEDOR CLIENTE linha VENDEDOR CLIENTE linha VENDEDOR CLIENTE	
-		JLabel labconcli = new JLabel("Consultor");
-		labconcli.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labconcli.setBounds(45, 292, 183, 35);
-		frame.getContentPane().add(labconcli);
 		
-		JLabel labconcliform = new JLabel("formato 9999");
-		labconcliform.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		labconcliform.setBounds(45, 317, 203, 28);
-		frame.getContentPane().add(labconcliform);
-		
-		//JTextArea concod = new JTextArea();
-		concod.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		concod.setBounds(229, 303, 160, 35);
-		frame.getContentPane().add(concod);
-		
-// linha VISITAS CLIENTE linha VISITAS CLIENTE linha VISITAS CLIENTE	
-		JLabel labviscli = new JLabel("Veículos");
-		labviscli.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labviscli.setBounds(45, 356, 150, 35);
-		frame.getContentPane().add(labviscli);
-		
-		JLabel labviscliform = new JLabel("formato 9999");
-		labviscliform.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		labviscliform.setBounds(45, 381, 203, 28);
-		frame.getContentPane().add(labviscliform);
-		
-		JTextArea clivis = new JTextArea();
-		clivis.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		clivis.setBounds(229, 367, 691, 35);
-		frame.getContentPane().add(clivis);
-			
 // linha BOTÃO SALVAR linha BOTÃO SALVAR linha BOTÃO SALVAR	 linha BOTÃO SALVAR	
 		JButton btnclisalvar = new JButton("Salvar");
 		btnclisalvar.addActionListener(new ActionListener() {
@@ -241,7 +241,7 @@ public class concli {
 			}
 		});
 		btnclivoltar.setFont(new Font("Tahoma", Font.BOLD, 36));
-		btnclivoltar.setBounds(698, 443, 223, 53);
+		btnclivoltar.setBounds(714, 443, 223, 53);
 		frame.getContentPane().add(btnclivoltar);
 	}
 }
