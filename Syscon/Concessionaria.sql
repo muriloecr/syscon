@@ -10,6 +10,14 @@ create table Consultor (
 #    foreign key (con_cli) references Cliente (cli_id),
 #    foreign key (con_vei) references Veiculo (vei_id)
 );
+create table ujjjjj(
+	id int not null,
+	con_vei int(4) not null,
+    primary key(id),
+    foreign key(id) references consultor(con_id) 
+
+# foreign key(id) references consultor(con_id) on delete restrict
+);
 create table Cliente (
 	cli_id int(4) unique not null primary key,
     cli_nome varchar(30) not null,
@@ -54,27 +62,38 @@ create table Acessorios (
 #   foreign key (ace_vei) references Veiculo (vei_id)
 );
 insert into Consultor (con_id,con_nome,con_cli,con_vei) values 
-	(0,'0',0,0),(1111,'jose durval',0001,0001),(2222,'maria do socorro',0002,0002),
-    (3333,'paulo sanches',0003,0001),(4444,'clara antunes',0006,0003);
+	(0,'0',0,0),
+    (1111,'jose durval',9901,8801),
+    (2222,'maria do socorro',9902,8802),
+    (3333,'paulo sanches',9903,8801),
+    (4444,'clara antunes',9906,8803);
 insert into Cliente (cli_id,cli_nome,cli_whats,cli_con,cli_vei) values 
-	(0,'0','0',0,0),(0001,'carla maria','(85) 9.8947-8473',1111,0001),(0002,'jose abreu lima','(85) 9.4547-8473',4444,0004),
-	(0006,'pedro felipe','(85) 9.8057-8783',2222,0002),(0005,'rogerio mateus','(85) 9.844357-8783',3333,0002),
-    (0003,'edumondo dants','(85) 9.8457-8783',2222,0002),(0004,'marcio garci','(85) 9.8347-8876',3333,0003);
+	(0,'0','0',0,0),
+    (9901,'carla maria','(85) 9.8947-8473',1111,8801),
+    (9902,'jose abreu lima','(85) 9.4547-8473',4444,8804),
+	(9906,'pedro felipe','(85) 9.8057-8783',2222,8802),
+    (9905,'rogerio mateus','(85) 9.844357-8783',3333,8802),
+    (9903,'edumondo dants','(85) 9.8457-8783',2222,8802),
+    (9904,'marcio garci','(85) 9.8347-8876',3333,8803);
+
 insert into Acessorios (ace_id,ace_nome,ace_vei) values 
-	(0,'0',0),(0001,'alarme',1001),(0002,'airbags',1001),
-    (0004,'som',1001),(0003,'gps',1001);
+	(0,'0',0),
+    (1001,'alarme',1001),
+    (2002,'airbags',1001),
+    (3003,'som',1001),
+    (4004,'gps',1001);
 insert into Veiculo (vei_id,vei_nome,vei_ano,vei_mod,vei_marca,
 	vei_condicao,vei_placa,vei_km,vei_combustivel,vei_cambio,
 	vei_carroc,vei_cor,vei_acess,vei_cli,vei_con,vei_descricao,vei_gal) values 
 	(0,'0',0,0,'0','0','0',0,'0','0','0','0',0,0,0,'0',''),
-    (0001,'Saveiro',2020,2021,'volkswagen','usado','pns-9374',120.000,
-    'flex','maunual','pick-up','azul',0001,0001,1111,'pickup nova e revisada',''),
-    (0002,'Uno',2019,2020,'fiat','usado','kso-2586',180.000,
-    'flex','maunual','passeio','verde',0003,0006,4444,'muito economico',''),
-    (0003,'corsa',2019,2020,'gm','usado','ddo-2786',90.000,
-    'flex','automatico','uber','branco',0002,0002,2222,'top',''),
-    (0004,'ford k',2019,2020,'ford','novo','kso-2544',127.000,
-    'flex','automatico','anda','bege',0004,0004,3333,'ainda anda','');
+    (8801,'Saveiro',2020,2021,'volkswagen','usado','pns-9374',120.000,
+    'flex','maunual','pick-up','azul',1001,0001,1111,'pickup nova e revisada',''),
+    (8802,'Uno',2019,2020,'fiat','usado','kso-2586',180.000,
+    'flex','maunual','passeio','verde',3003,0006,4444,'muito economico',''),
+    (8803,'corsa',2019,2020,'gm','usado','ddo-2786',90.000,
+    'flex','automatico','uber','branco',2002,0002,2222,'top',''),
+    (8804,'ford k',2019,2020,'ford','novo','kso-2544',127.000,
+    'flex','automatico','anda','bege',4004,0004,3333,'ainda anda','');
 alter table Consultor add
 	foreign key (con_cli) references Cliente (cli_id);
 alter table Consultor add
