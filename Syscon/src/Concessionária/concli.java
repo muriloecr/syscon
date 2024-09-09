@@ -15,6 +15,7 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
+import javax.swing.JFormattedTextField$AbstractFormatter;
 
 public class concli {
 
@@ -174,9 +175,9 @@ public class concli {
 		frame.getContentPane().add(clivis);
 		
 // linha CADASTRAR VEÍCULO linha CADASTRAR VEÍCULO linha CADASTRAR VEÍCULO
-		JLabel labadveicli = new JLabel("CAD Veículo");
+		JLabel labadveicli = new JLabel("Cadartrar Veículo");
 		labadveicli.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labadveicli.setBounds(45, 349, 183, 35);
+		labadveicli.setBounds(45, 349, 234, 35);
 		frame.getContentPane().add(labadveicli);
 		
 		JLabel labcadcliform = new JLabel("formato 9999");
@@ -186,18 +187,18 @@ public class concli {
 		
 		//JTextArea cadveicli = new JTextArea();
 		cadveicli.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		cadveicli.setBounds(229, 360, 160, 35);
+		cadveicli.setBounds(275, 360, 160, 35);
 		frame.getContentPane().add(cadveicli);
 		
 // linha EXCLUIR VEÍCULO linha EXCLUIR VEÍCULO linha EXCLUIR VEÍCULO
-		JLabel labexveicli = new JLabel("EXC Veículo");
+		JLabel labexveicli = new JLabel("Excluir Veículo");
 		labexveicli.setFont(new Font("Tahoma", Font.BOLD, 24));
-		labexveicli.setBounds(597, 349, 183, 35);
+		labexveicli.setBounds(572, 349, 183, 35);
 		frame.getContentPane().add(labexveicli);
 		
 		JLabel labconcliform_1 = new JLabel("formato 9999");
 		labconcliform_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		labconcliform_1.setBounds(597, 374, 203, 28);
+		labconcliform_1.setBounds(572, 374, 203, 28);
 		frame.getContentPane().add(labconcliform_1);
 		
 		//JTextArea excveicli = new JTextArea();
