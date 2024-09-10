@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.NumberFormat;
-
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -226,23 +225,8 @@ public class concli {
 		btnclisalvar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-// se for igual a 0 fecha e volta
-		if (cli_id != 0) {
-			public void actionPerformed(ActionEvent e) {
-				conini tel = new conini();
-				tel.visivel();
-				frame.dispose();
-			}
-		};
-		
-		if (cli_id != 0) {
-			public void actionPerformed(ActionEvent e) {
-				conini tel = new conini();
-				tel.visivel();
-				frame.dispose();
-			}
-		};
-		
+
+	
 		while (true) {
 					if (!cli_existe) {
 						private Object statement;
