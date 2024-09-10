@@ -1,25 +1,40 @@
 package Concessionaria;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.NumberFormat;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
-import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
-import javax.swing.JFormattedTextField$AbstractFormatter;
+import javax.swing.JScrollPane;
 
 public class concli {
 
 	private JFrame frame;
+
+// CONECTANDO COM O BANCO DE DADOS
+	private Connection conn;
+
+// RECEBE A CONEXÃO
+	public concli(Connection conn) {
+		this.conn = conn;
+		initialize();
+	}
 
 // DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS
 	private JFormattedTextField clicod;
@@ -31,15 +46,15 @@ public class concli {
 
 // lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO	
 	public static void main(String[] args) {
-	EventQueue.invokeLater(new Runnable() {
-		public void run() {
-			try {
-				concli window = new concli();
-				window.frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					concli window = new concli();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		}
 		});
 	}
 
@@ -209,11 +224,51 @@ public class concli {
 // linha BOTÃO SALVAR linha BOTÃO SALVAR linha BOTÃO SALVAR	 linha BOTÃO SALVAR	
 		JButton btnclisalvar = new JButton("Salvar");
 		btnclisalvar.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+// se for igual a 0 fecha e volta
+		if (cli_id != 0) {
 			public void actionPerformed(ActionEvent e) {
 				conini tel = new conini();
 				tel.visivel();
 				frame.dispose();
 			}
+		};
+		
+		if (cli_id != 0) {
+			public void actionPerformed(ActionEvent e) {
+				conini tel = new conini();
+				tel.visivel();
+				frame.dispose();
+			}
+		};
+		
+		while (true) {
+					if (!cli_existe) {
+						private Object statement;
+//inserir dados
+						public void inserirContato(String nome, String telefone) {
+						try {
+//aspas simple que � usado no mysql
+							String query = "insert into Cliente(cli_nome,cli_whats) values"
+									+ "('"+cli_nome+"','"+cli_whats+"')";
+							((Statement) this.statement).executeUpdate(query);
+						}catch(Exception e) {
+							System.out.println("ERROR: "+e.getMessage());
+						}
+					}else {			
+//editar dados			
+						public void editarContato(int cli_id,int cli_nome, String cli_whats) {
+						try {			
+//aspas simple que � usado no mysql
+							String query = "update contato set nome ='"+cli_nome+"',telefone = '"+cli_whats+"' where id = '"+cli_id+"'";
+							((Statement) this.statement).executeUpdate(query);
+						}catch(Exception e) {
+							System.out.println("ERROR: "+e.getMessage());
+							}
+						}	
+					}		
+			
 		});
 		btnclisalvar.setFont(new Font("Tahoma", Font.BOLD, 36));
 		btnclisalvar.setBounds(42, 443, 223, 53);
@@ -244,5 +299,25 @@ public class concli {
 		btnclivoltar.setFont(new Font("Tahoma", Font.BOLD, 36));
 		btnclivoltar.setBounds(714, 443, 223, 53);
 		frame.getContentPane().add(btnclivoltar);
+	}
+		
+// pesquisa para saber se existe o cliente pelo codigo
+	private void voidverificarCodigoCliente() {
+		String codigo = clicod.getText();
+		String sql = "SELECT cli_nome, cli_whats FROM cliente WHERE codigo = ?";
+
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, codigo);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				
+// Se o cliente existir, preencher os campos
+				boolean cli_existe = (false);
+				AbstractButton cli_nome;
+				cli_nome.setText(rs.getString("cli_nome"));
+				cli_whats.setText(rs.getString("cli_whats"));
+			}
+		}
 	}
 }
