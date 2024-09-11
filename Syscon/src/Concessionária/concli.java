@@ -22,6 +22,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
+import javax.swing.JTextPane;
 
 
 public class concli {
@@ -83,6 +84,7 @@ public class concli {
 	// private JFormattedTextField excveicli;
 	// private JFormattedTextField cadveicli;
 	private JFormattedTextField con_nome;
+	private JLabel lblNewLabel;
 	
 // lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO	
 	public void main(String[] args) {
@@ -138,11 +140,6 @@ public class concli {
 		 * // MÁSCARAS MÁSCARAS MÁSCARAS MÁSCARAS MÁSCARAS MÁSCARAS MÁSCARAS MÁSCARAS
 		 * MÁSCARAS NumberFormat numberFormat = NumberFormat.getIntegerInstance();
 		 * NumberFormatter numberFormatter = new NumberFormatter(numberFormat);
-		 * numberFormatter.setAllowsInvalid(false); try { MaskFormatter mask = new
-		 * MaskFormatter("####"); clicod = new JFormattedTextField(mask); MaskFormatter
-		 * mask1 = new MaskFormatter("####"); concod = new JFormattedTextField(mask1);
-		 * MaskFormatter mask2 = new MaskFormatter("###.###.###-##"); clicpf = new
-		 * JFormattedTextField(mask2); MaskFormatter mask3 = new
 		 * MaskFormatter("(##) 9.####-####"); cliwhats = new JFormattedTextField(mask3);
 		 * MaskFormatter mask4 = new MaskFormatter("####"); excveicli = new
 		 * JFormattedTextField(mask4); MaskFormatter mask6 = new MaskFormatter("####");
@@ -225,14 +222,7 @@ public class concli {
 			}
 		});
 		
-		
-		
-		
-		
-		
-		
-		
-	con_nome = new JFormattedTextField();
+		con_nome = new JFormattedTextField();
 		con_nome.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		con_nome.setBounds(589, 124, 352, 35);
 		frame.getContentPane().add(con_nome);
@@ -363,7 +353,9 @@ public class concli {
 		btnclivoltar.setBounds(714, 443, 223, 53);
 		frame.getContentPane().add(btnclivoltar);
 		
-		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(589, 56, 86, 14);
+		frame.getContentPane().add(lblNewLabel);
 	
 	}
 
@@ -386,7 +378,8 @@ public class concli {
 			this.resultset = this.statement.executeQuery(query);
 			while (this.resultset.next()) {
 			String nome = this.resultset.getString("con_nome");
-			con_nome.setText(nome);
+			//con_nome.setText(nome);
+			lblNewLabel.setText(nome);
 			}
 		}catch (Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
@@ -452,14 +445,11 @@ public class concli {
 	public void inserirContato(String id, String nome, String whats) {
 		try {
 
-//aspas simple que � usado no mysql
+	//aspas simple que � usado no mysql
 	String query = "insert into cliente(cli_id,cli_nome,cli_whats) values ('"+id+"','"+nome+"','"+whats+"')";
 		this.statement.executeUpdate(query);
 		}catch(Exception e) {
 			System.out.println("ERROR: "+e.getMessage());
 		}
 	}
-	
-	
-	
 }
