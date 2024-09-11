@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,20 +20,52 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 public class concli {
 
 	private JFrame frame;
 
-// CONECTANDO COM O BANCO DE DADOS
-	private Connection conn;
+//armazena a conex�o	
+	private Connection connection = null;
 
-// RECEBE A CONEXÃO
-	public concli(Connection conn) {
-		this.conn = conn;
-		initialize();
+//armazena as consultas
+	private Statement statement = null;
+
+//armazena os resultados
+	private ResultSet resultset = null;
+
+	public void conectar() {
+
+//caminho
+		String servidor = "jdbc:mysql://localhost:3306/cadastro";
+
+//usuario
+		String usuario = "root";
+
+//senha
+		String senha = "arley911";
+
+//local driver instalado
+		String driver = "com.mysql.cj.jdbc.Driver";
+		try {
+
+//acessa o driver
+			Class.forName(driver);
+			this.connection = DriverManager.getConnection(servidor, usuario, senha);
+
+//consultas
+			this.statement = this.connection.createStatement();
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+	}
+
+	public boolean estaConectado() {
+		if (this.connection != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 // DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS
@@ -44,7 +77,7 @@ public class concli {
 	private JFormattedTextField cadveicli;
 
 // lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO	
-	public static void main(String[] args) {
+	public void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -220,48 +253,59 @@ public class concli {
 		excveicli.setBounds(781, 360, 160, 35);
 		frame.getContentPane().add(excveicli);
 		
+		
+		
+		
+		
 // linha BOTÃO SALVAR linha BOTÃO SALVAR linha BOTÃO SALVAR	 linha BOTÃO SALVAR	
 		JButton btnclisalvar = new JButton("Salvar");
 		btnclisalvar.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			
+		public void actionPerformed(ActionEvent e) {		
 
-	
-		while (true) {
-					if (!cli_existe) {
-						private Object statement;
+// cliente existe - atera / cliente novo salva
+			while (true) {
+				if (!cli_existe) {
+				private Object statement;
+				
 //inserir dados
-						public void inserirContato(String nome, String telefone) {
-						try {
+				public void inserirContato(String nome, String telefone) {
+				try {
 //aspas simple que � usado no mysql
-							String query = "insert into Cliente(cli_nome,cli_whats) values"
-									+ "('"+cli_nome+"','"+cli_whats+"')";
-							((Statement) this.statement).executeUpdate(query);
-						}catch(Exception e) {
-							System.out.println("ERROR: "+e.getMessage());
-						}
-					}else {			
-//editar dados			
-						public void editarContato(int cli_id,int cli_nome, String cli_whats) {
-						try {			
-//aspas simple que � usado no mysql
-							String query = "update contato set nome ='"+cli_nome+"',telefone = '"+cli_whats+"' where id = '"+cli_id+"'";
-							((Statement) this.statement).executeUpdate(query);
-						}catch(Exception e) {
-							System.out.println("ERROR: "+e.getMessage());
-							}
-						}	
-					}		
+					String query = "insert into Cliente(cli_nome,cli_whats) values"
+							+ "('"+cli_nome+"','"+cli_whats+"')";
+					((Statement) this.statement).executeUpdate(query);
+				}catch(Exception e) {
+					System.out.println("ERROR: "+e.getMessage());
+				}	
 			
+//editar dados			
+				public void editarContato(int cli_id,int cli_nome, String cli_whats) {
+				try {			
+//aspas simple que � usado no mysql
+					String query = "update contato set nome ='"+cli_nome+"',telefone = '"+cli_whats+"' where id = '"+cli_id+"'";
+					((Statement) this.statement).executeUpdate(query);
+				}catch(Exception e) {	
+					System.out.println("ERROR: "+e.getMessage());
+					}
+				}
+			}	
+		}		
+	}	}}}	
 		});
 		btnclisalvar.setFont(new Font("Tahoma", Font.BOLD, 36));
 		btnclisalvar.setBounds(42, 443, 223, 53);
 		frame.getContentPane().add(btnclisalvar);
 
+		
+		
+		
+		
+		
 // linha BOTÃO EXCLUIR linha BOTÃO EXCLUIR linha BOTÃO EXCLUIR linha BOTÃO EXCLUIR
 		JButton btncliExcluir = new JButton("Excluir");
 		btncliExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+
+	public void actionPerformed(ActionEvent e) {
 				conini tel = new conini();
 				tel.visivel();
 				frame.dispose();
@@ -284,24 +328,19 @@ public class concli {
 		btnclivoltar.setBounds(714, 443, 223, 53);
 		frame.getContentPane().add(btnclivoltar);
 	}
-		
-// pesquisa para saber se existe o cliente pelo codigo
-	private void voidverificarCodigoCliente() {
-		String codigo = clicod.getText();
-		String sql = "SELECT cli_nome, cli_whats FROM cliente WHERE codigo = ?";
 
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, codigo);
-			ResultSet rs = stmt.executeQuery();
-
-			if (rs.next()) {
-				
-// Se o cliente existir, preencher os campos
-				boolean cli_existe = (false);
-				AbstractButton cli_nome;
-				cli_nome.setText(rs.getString("cli_nome"));
-				cli_whats.setText(rs.getString("cli_whats"));
-			}
-		}
-	}
+	/*
+	 * // pesquisa para saber se existe o cliente pelo codigo private void
+	 * voidverificarCodigoCliente() { String codigo = clicod.getText(); String sql =
+	 * "SELECT cli_nome, cli_whats FROM cliente WHERE codigo = ?";
+	 * 
+	 * try (PreparedStatement stmt = conn.prepareStatement(sql)) { stmt.setString(1,
+	 * codigo); ResultSet rs = stmt.executeQuery();
+	 * 
+	 * if (rs.next()) {
+	 * 
+	 * // Se o cliente existir, preencher os campos boolean cli_existe = (false);
+	 * AbstractButton cli_nome; cli_nome.setText(rs.getString("cli_nome"));
+	 * cli_whats.setText(rs.getString("cli_whats")); } } }
+	 */
 }
