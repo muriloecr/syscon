@@ -13,15 +13,16 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 
 public class conini {
-	
+
+	private JFrame frame;
 // conecta BCO DADOS conecta BCO DADOS conecta BCO DADOS conecta BCO DADOS
 	private Connection connection = null;
 	private Statement statement = null;
-	private ResultSet resultset = null;
+	//private ResultSet resultset = null;
 	public void conectar() {
 		String servidor="jdbc:mysql://localhost:3306/cadastro";
-		String usuario = "";
-		String senha = "";
+		String usuario = "root";
+		String senha = "Aluno";
 		String driver = "com.mysql.cj.jdbc.Driver";
 		try {
 			Class.forName(driver);
@@ -31,17 +32,16 @@ public class conini {
 			System.out.println("ERROR: "+e.getMessage());
 		}
 	}
-	public boolean estaConectado() {
+	/*public boolean estaConectado() {
 		if(this.connection!=null) {
 			return true;
 		}else {
 			return false;
 		}
-	}
+	}*/
 
 	
 	
-	private JFrame frame;
 
 // lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO	
 	public static void main(String[] args) {
@@ -64,7 +64,7 @@ public class conini {
 
 // deixa a JANELA VISIVEL QUANDO CHAMADA deixa a JANELA VISIVEL QUANDO CHAMADA
 	public void visivel() {
-		concli window = new concli();
+		conini window = new conini();
 		window.frame.setVisible(true);
 	}
 	
