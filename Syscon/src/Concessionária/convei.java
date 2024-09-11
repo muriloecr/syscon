@@ -1,20 +1,24 @@
 package Concessionaria;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.NumberFormat;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 
 public class convei {
 
@@ -26,8 +30,6 @@ public class convei {
 	private JFormattedTextField veimod;
 	private JFormattedTextField veiplaca;
 	private JFormattedTextField veikm;
-	
-	
 	private JFormattedTextField cadveicli;
 
 // lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO	
