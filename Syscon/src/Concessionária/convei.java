@@ -5,33 +5,84 @@ import java.awt.event.ActionListener;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.NumberFormat;
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 public class convei {
+	
+	//armazena a conexão	
+		private Connection connection = null;
 
-	private JFrame frame;
+	//armazena as consultas
+		private Statement statement = null;
 
+	//armazena os resultados
+		private ResultSet resultset = null;
+
+		public void conectar() {
+
+	//caminho
+		String servidor = "jdbc:mysql://localhost:3306/Concessionaria";
+
+	//usuario
+		String usuario = "root";
+
+	//senha
+		String senha = "arley911";
+
+	//local driver instalado
+		String driver = "com.mysql.cj.jdbc.Driver";
+		try {
+
+	//acessa o driver
+			Class.forName(driver);
+				this.connection = DriverManager.getConnection(servidor, usuario, senha);
+
+	//consultas
+				this.statement = this.connection.createStatement();
+			}catch (Exception e) {
+				System.out.println("ERROR: " + e.getMessage());
+			}
+		}
+
+		public boolean estaConectado() {
+			if (this.connection != null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	
 // DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS
+	private JFrame frame;
+	
 	private JFormattedTextField veicod;
+	private JTextArea veinome;
 	private JFormattedTextField veiano;
 	private JFormattedTextField veimod;
+	private JTextArea veimarca;
+	private JTextArea veicondicao;
+	private JTextArea veicombustivel;
+	private JTextArea veicambio;
+	private JTextArea veicarroc;
+	private JTextArea veicor;
+	private JTextArea veidescr;
 	private JFormattedTextField veiplaca;
 	private JFormattedTextField veikm;
-	private JFormattedTextField cadveicli;
-
+	//private JFormattedTextField cadveicli;
+	
 // lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO lança a APLICAÇÃO	
 	public static void main(String[] args) {
 	EventQueue.invokeLater(new Runnable() {
@@ -59,6 +110,7 @@ public class convei {
 
 // inicia a JANELA inicia a JANELA inicia a JANELA inicia a JANELA inicia a JANELA
 	private void initialize() {
+		conectar();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1500, 1000);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,16 +123,12 @@ public class convei {
         try {
 		    MaskFormatter mask = new MaskFormatter("####");
 		    veicod = new JFormattedTextField(mask);
-		    MaskFormatter mask1 = new MaskFormatter("####");
-			veiano = new JFormattedTextField(mask1);
-			MaskFormatter mask2 = new MaskFormatter("####");
-			veimod = new JFormattedTextField(mask2);
-			MaskFormatter mask3 = new MaskFormatter("***-****");
-			veiplaca = new JFormattedTextField(mask3);
-			MaskFormatter mask4 = new MaskFormatter("###.###");
-			veikm = new JFormattedTextField(mask4);
-			MaskFormatter mask5 = new MaskFormatter("####");
-			cadveicli = new JFormattedTextField(mask5);
+		    veiano = new JFormattedTextField(mask);
+			veimod = new JFormattedTextField(mask);
+			MaskFormatter mask1 = new MaskFormatter("***-****");
+			veiplaca = new JFormattedTextField(mask1);
+			MaskFormatter mask2 = new MaskFormatter("###.###");
+			veikm = new JFormattedTextField(mask2);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO na formatação de Campos", "erro", JOptionPane.ERROR_MESSAGE);
 		}		
@@ -112,6 +160,21 @@ public class convei {
 		veicod.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veicod.setBounds(204, 105, 111, 35);
 		frame.getContentPane().add(veicod);
+		veicod.getDocument().addDocumentListener(new DocumentListener(){
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+			//String id = veicod.getText();
+				atualizarInformacoes(veicod.getText());
+			}
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				atualizarInformacoes(veicod.getText());
+			}
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				atualizarInformacoes(veicod.getText());
+			}
+		});
 		
 // linha NOME VEÍCULO linha NOME VEÍCULO linha NOME VEÍCULO linha NOME VEÍCULO
 		JLabel labnomevei = new JLabel("Nome");
@@ -124,10 +187,10 @@ public class convei {
 		labnomeveiform.setBounds(338, 119, 150, 28);
 		frame.getContentPane().add(labnomeveiform);
 		
-		JTextArea veinome = new JTextArea();
+		veinome = new JTextArea();
 		veinome.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veinome.setBounds(445, 101, 485, 35);
-		frame.getContentPane().add(veinome);		
+		frame.getContentPane().add(veinome);	
 		
 // linha ANO VEÍCULO linha ANO VEÍCULO linha ANO VEÍCULO linha ANO VEÍCULO
 		JLabel labcanovei = new JLabel("Ano");
@@ -140,7 +203,7 @@ public class convei {
 		labanoveiform.setBounds(959, 119, 150, 28);
 		frame.getContentPane().add(labanoveiform);
 			
-		//JTextArea veiano = new JTextArea();
+		//veiano = new JTextArea();
 		veiano.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veiano.setBounds(1344, 105, 101, 35);
 		frame.getContentPane().add(veiano);
@@ -156,7 +219,7 @@ public class convei {
 		labmodveiform.setBounds(1223, 119, 150, 28);
 		frame.getContentPane().add(labmodveiform);
 			
-		//JTextArea veimod = new JTextArea();
+		//veimod = new JTextArea();
 		veimod.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veimod.setBounds(1079, 101, 111, 35);
 		frame.getContentPane().add(veimod);
@@ -172,7 +235,7 @@ public class convei {
 		labmarcaveiform.setBounds(43, 177, 104, 28);
 		frame.getContentPane().add(labmarcaveiform);
 		
-		JTextArea veimarca = new JTextArea();
+		veimarca = new JTextArea();
 		veimarca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veimarca.setBounds(157, 162, 147, 35);
 		frame.getContentPane().add(veimarca);
@@ -188,10 +251,10 @@ public class convei {
 		labcondveiform.setBounds(349, 177, 150, 28);
 		frame.getContentPane().add(labcondveiform);
 		
-		JTextArea veicond = new JTextArea();
-		veicond.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		veicond.setBounds(473, 162, 160, 35);
-		frame.getContentPane().add(veicond);		
+		veicondicao = new JTextArea();
+		veicondicao.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		veicondicao.setBounds(473, 162, 160, 35);
+		frame.getContentPane().add(veicondicao);		
 		
 // linha PLACA VEÍCULO linha PLACA VEÍCULO linha PLACA VEÍCULO linha PLACA VEÍCULO
 		JLabel labplacavei = new JLabel("Placa");
@@ -204,7 +267,7 @@ public class convei {
 		labplacaveiform.setBounds(692, 180, 150, 28);
 		frame.getContentPane().add(labplacaveiform);
 		
-		//JTextArea veiplaca = new JTextArea();
+		//veiplaca = new JTextArea();
 		veiplaca.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veiplaca.setBounds(852, 162, 150, 35);
 		frame.getContentPane().add(veiplaca);
@@ -220,7 +283,7 @@ public class convei {
 		labkmveiform.setBounds(1076, 180, 150, 28);
 		frame.getContentPane().add(labkmveiform);
 		
-		//JTextArea veikm = new JTextArea();
+		//veikm = new JTextArea();
 		veikm.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		veikm.setBounds(1298, 158, 147, 35);
 		frame.getContentPane().add(veikm);
@@ -236,10 +299,10 @@ public class convei {
 		labcombveiform.setBounds(44, 238, 150, 28);
 		frame.getContentPane().add(labcombveiform);
 		
-		JTextArea veicomb = new JTextArea();
-		veicomb.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		veicomb.setBounds(223, 220, 148, 35);
-		frame.getContentPane().add(veicomb);
+		veicombustivel = new JTextArea();
+		veicombustivel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		veicombustivel.setBounds(223, 220, 148, 35);
+		frame.getContentPane().add(veicombustivel);
 		
 // linha CÂMBIO VEÍCULO linha CÂMBIO VEÍCULO linha CÂMBIO VEÍCULO linha CÂMBIO VEÍCULO
 		JLabel labcambvei = new JLabel("Câmbio");
@@ -252,10 +315,10 @@ public class convei {
 		labcambveiform.setBounds(456, 238, 150, 28);
 		frame.getContentPane().add(labcambveiform);
 		
-		JTextArea veicamb = new JTextArea();
-		veicamb.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		veicamb.setBounds(570, 220, 150, 35);
-		frame.getContentPane().add(veicamb);
+		veicambio = new JTextArea();
+		veicambio.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		veicambio.setBounds(570, 220, 150, 35);
+		frame.getContentPane().add(veicambio);
 		
 // linha CARROCERIA VEÍCULO linha CARROCERIA VEÍCULO linha CARROCERIA VEÍCULO	
 		JLabel labcarrocvei = new JLabel("Carroceria");
@@ -268,7 +331,7 @@ public class convei {
 		labcarrocveiform.setBounds(819, 238, 150, 28);
 		frame.getContentPane().add(labcarrocveiform);
 		
-		JTextArea veicarroc = new JTextArea();
+		veicarroc = new JTextArea();
 		veicarroc.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		veicarroc.setBounds(971, 220, 150, 35);
 		frame.getContentPane().add(veicarroc);
@@ -284,7 +347,7 @@ public class convei {
 		labcorveiform.setBounds(1195, 238, 150, 28);
 		frame.getContentPane().add(labcorveiform);
 		
-		JTextArea veicor = new JTextArea();
+		veicor = new JTextArea();
 		veicor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		veicor.setBounds(1295, 220, 150, 35);
 		frame.getContentPane().add(veicor);
@@ -321,15 +384,35 @@ public class convei {
 		maisvei.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		maisvei.setBounds(45, 361, 1400, 139);
 		frame.getContentPane().add(maisvei);
-				
+		
+		veidescr = new JTextArea();
+		veidescr.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		veidescr.setBounds(45, 361, 1400, 139);
+		frame.getContentPane().add(veidescr);
+						
 // linha BOTÃO SALVAR linha BOTÃO SALVAR linha BOTÃO SALVAR	 linha BOTÃO SALVAR	
 		JButton btnclisalvar = new JButton("Salvar");
 		btnclisalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conini tel = new conini();
-				tel.visivel();
-				frame.dispose();
+				String id = veicod.getText();
+				String nome = veinome.getText();
+				String ano = veiano.getText();
+				String mod = veimod.getText();
+				String marca = veimarca.getText();
+				String condicao = veicondicao.getText();
+				String placa = veiplaca.getText();
+				String km = veikm.getText();
+				String combustivel = veicombustivel.getText();
+				String cambio = veicambio.getText();
+				String carroc = veicarroc.getText();
+				String cor = veicor.getText();
+				String descricao = veidescr.getText();
+				if(verificarContato(id)) {
+					editarContato(id,nome,ano,mod,marca,condicao,placa,km,combustivel,cambio,carroc,cor,descricao);
+				}else {
+					inserirContato(id,nome,ano,mod,marca,condicao,placa,km,combustivel,cambio,carroc,cor,descricao);
 				}
+			}
 			});
 			btnclisalvar.setFont(new Font("Tahoma", Font.BOLD, 36));
 			btnclisalvar.setBounds(292, 636, 223, 53);
@@ -339,9 +422,20 @@ public class convei {
 		JButton btncliExcluir = new JButton("Excluir");
 		btncliExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conini tel = new conini();
-				tel.visivel();
-				frame.dispose();
+				String id = veicod.getText();
+				apagarContato(id);
+				veinome.setText("");
+				veiano.setText("");
+				veimod.setText("");
+				veimarca.setText("");
+				veicondicao.setText("");
+				veiplaca.setText("");
+				veikm.setText("");
+				veicombustivel.setText("");
+				veicambio.setText("");
+				veicarroc.setText("");
+				veicor.setText("");
+				veidescr.setText("");
 			}
 		});
 		btncliExcluir.setFont(new Font("Tahoma", Font.BOLD, 36));
@@ -385,4 +479,97 @@ public class convei {
 		frame.getContentPane().add(btngalvei);
 	}
 
+	
+	
+// BUSCAR BANCO DE DADOS E IMPRIMIR BUSCAR BANCO DE DADOS E IMPRIMIR
+	public void atualizarInformacoes(String id) {
+		try {
+			String query = "Select vei_nome,vei_ano,vei_mod,vei_marca,"
+				+ "vei_condicao,vei_placa,vei_km,vei_combustivel,"
+				+ "vei_cambio,vei_carroc,vei_cor,vei_descricao"
+				+ " from Veiculo where vei_id = '"+id+"'";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				String nome = this.resultset.getString("vei_nome");
+				veinome.setText(nome);
+				String ano =this.resultset.getString("vei_ano");
+				veiano.setText(ano);
+				String mod = this.resultset.getString("vei_mod");
+				veimod.setText(mod);
+				String marca = this.resultset.getString("vei_marca");
+				veimarca.setText(marca);
+				String condicao = this.resultset.getString("vei_condicao");
+				veicondicao.setText(condicao);				
+				String placa = this.resultset.getString("vei_placa");
+				veiplaca.setText(placa);
+				String km = this.resultset.getString("vei_km");
+				veikm.setText(km);
+				String combustivel = this.resultset.getString("vei_combustivel");
+				veicombustivel.setText(combustivel);
+				String cambio = this.resultset.getString("vei_cambio");
+				veicambio.setText(cambio);
+				String carroc = this.resultset.getString("vei_carroc");
+				veicarroc.setText(carroc);
+				String cor = this.resultset.getString("vei_cor");
+				veicor.setText(cor);
+				String descicao =this.resultset.getString("vei_descricao");
+				veidescr.setText(descicao);
+				}
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+	}
+
+// CADASTRAR OU ALTERAR O CLIENTE CADASTRAR OU ALTERAR O CLIENTE	
+	public boolean verificarContato(String id) {
+		try {
+			String query = "Select * from Veiculo where vei_id = '"+id+"'";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		return false;
+	}
+	public void inserirContato(String id, String nome, String ano, String mod, 
+			String marca, String condicao, String placa, String km, String combustivel,
+			String cambio, String carroc, String cor, String descricao) {
+		try {
+		//aspas simple que � usado no mysql
+			String query = "insert into Veiculo(vei_id,vei_nome,vei_ano,vei_mod, vei_marca,vei_condicao,vei_placa,vei_km,vei_combustrivel,vei_cambio,vei_carroc,vei_cor,vei_descricao) values "
+					+ "('"+id+"','"+nome+"','"+ano+"','"+mod+"','"+marca+"','"+condicao+"','"+placa+"','"+km+"','"+combustivel+"','"+cambio+"','"+carroc+"','"+cor+"','"+descricao+"')";
+			this.statement.executeUpdate(query);
+		}catch(Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
+		}
+	}
+
+// EDITAR DADOS EDITAR DADOS EDITAR DADOS EDITAR DADOS EDITAR DADOS EDITAR DADOS
+	public void editarContato(String vei_id, String vei_nome, String vei_ano, String vei_mod, 
+			String vei_marca, String vei_condicao, String vei_placa, String vei_km, String vei_combustivel,
+			String vei_cambio, String vei_carroc, String vei_cor, String vei_descricao) {
+		try {
+			
+		// aspas simple que � usado no mysql
+			String query = "update veiculo vei_nome = '"+vei_nome+"',vei_ano = '"+vei_ano+"',vei_mod = '"+vei_mod+"',vei_marca = '"+vei_marca+"',vei_condicao = '"+vei_condicao+"',vei_placa = '"+vei_placa+"',vei_km = '"+vei_km+"',vei_combustivel = '"+vei_combustivel+"',vei_cambio = '"+vei_cambio+"',vei_carroc = '"+vei_carroc+"',vei_cor = '"+vei_cor+"',vei_descricao = '"+vei_descricao+"' where vei_id = '"+vei_id+"'";
+			this.statement.executeUpdate(query);
+		}catch(Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
+			}
+		}
+	
+// APAGAR VEICULO APAGAR VEICULO APAGAR VEICULO APAGAR VEICULO APAGAR VEICULO
+	public void apagarContato(String id) {
+		try {
+	//aspas simple que � usado no mysql
+			String query = "delete from veiculo where vei_id ='"+id+"'";
+			this.statement.executeUpdate(query);
+		}catch(Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
+		}
+	}	
+	
+	
 }
