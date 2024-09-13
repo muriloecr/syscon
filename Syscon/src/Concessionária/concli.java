@@ -1,5 +1,7 @@
 package Concessionaria;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.EventQueue;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.NumberFormat;
 import javax.swing.AbstractButton;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -24,10 +27,9 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 import javax.swing.JTextPane;
 
-
 public class concli {
 	
-//armazena a conex�o	
+//armazena a conexão	
 	private Connection connection = null;
 
 //armazena as consultas
@@ -45,7 +47,7 @@ public class concli {
 	String usuario = "root";
 
 //senha
-	String senha = "Aluno";
+	String senha = "arley911";
 
 //local driver instalado
 	String driver = "com.mysql.cj.jdbc.Driver";
@@ -74,12 +76,11 @@ public class concli {
 	private JFrame frame;
 
 	private JFormattedTextField cli_cod;
-	private JFormattedTextField concod;
+	private JTextField concod;
 	private JFormattedTextField clicpf;
-	//private JFormattedTextField cliwhats;
 	private JTextArea clinome;
 	private JTextArea clivis;
-	private JFormattedTextField cliwhats;
+	//private JFormattedTextField cliwhats;
 	private JFormattedTextField cliwhats_1;
 	// private JFormattedTextField excveicli;
 	// private JFormattedTextField cadveicli;
@@ -126,7 +127,7 @@ public class concli {
         try {
         	MaskFormatter mask = new MaskFormatter("####");
 			cli_cod = new JFormattedTextField(mask);
-			concod = new JFormattedTextField(mask);
+		//	concod = new JFormattedTextField(mask);
 		//	asvei = new JFormattedTextField(mask1);
 		//	asadveicod = new JFormattedTextField(mask2);
 		//	asexcveicod = new JFormattedTextField(mask3);
@@ -148,13 +149,12 @@ public class concli {
 		 * JOptionPane.ERROR_MESSAGE); }
 		 */
 
-// label janela CLIENTE label janela CLIENTE label janela CLIENTE
+// label janela CLIENTE E LOGOTIPO label janela CLIENTE E LOGOTIPO
 		JLabel labcli = new JLabel("Cliente");
 		labcli.setFont(new Font("Tahoma", Font.BOLD, 50));
 		labcli.setBounds(45, 33, 183, 61);
 		frame.getContentPane().add(labcli);
 
-// label janela SysCon label janela SysCon label janela SysCon
 		JLabel lablogo = new JLabel("SysCon");
 		lablogo.setFont(new Font("Tahoma", Font.BOLD, 50));
 		lablogo.setBounds(758, 33, 183, 61);
@@ -203,6 +203,7 @@ public class concli {
 		frame.getContentPane().add(labconcliform);
 	
 		// JTextArea concod = new JTextArea();
+		concod = new JTextField();
 		concod.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		concod.setBounds(488, 125, 86, 35);
 		frame.getContentPane().add(concod);
@@ -211,22 +212,34 @@ public class concli {
 			public void insertUpdate(DocumentEvent e) {
 			//String id = cli_cod.getText();
 				atualizarInformacoesConsultor(concod.getText());
+				lblNewLabel.setText(concod.getText());
 			}
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				atualizarInformacoesConsultor(concod.getText());
+				lblNewLabel.setText(concod.getText());
 			}
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				atualizarInformacoesConsultor(concod.getText());
+				lblNewLabel.setText(concod.getText());
 			}
 		});
 		
+/*		// CONTORNO BRANCO
 		con_nome = new JFormattedTextField();
 		con_nome.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		con_nome.setBounds(589, 124, 352, 35);
 		frame.getContentPane().add(con_nome);
 
+		// SOMENTE EXIBIÇÃO DO TEXTO SEM EDIÇÃO
+		JLabel blNewLabel = new JLabel("");
+		// lblNewLabel = new JLabel("");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel.setBounds(589, 85, 282, 28);
+		frame.getContentPane().add(lblNewLabel);
+		*/
+	
 // linha NOME CLIENTE linha NOME CLIENTE linha NOME CLIENTE linha NOME CLIENTE
 		JLabel labnomecli = new JLabel("Nome");
 		labnomecli.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -276,7 +289,7 @@ public class concli {
 		frame.getContentPane().add(clivis);
 
 // linha CADASTRAR VEÍCULO linha CADASTRAR VEÍCULO linha CADASTRAR VEÍCULO
-		JLabel labadveicli = new JLabel("Cadartrar Veículo");
+		JLabel labadveicli = new JLabel("Cadastrar Veículo");
 		labadveicli.setFont(new Font("Tahoma", Font.BOLD, 24));
 		labadveicli.setBounds(45, 349, 234, 35);
 		frame.getContentPane().add(labadveicli);
@@ -319,7 +332,6 @@ public class concli {
 				}else {
 					inserirContato(id,nome,whats);
 				}
-				
 			}
 		});
 		btnclisalvar.setFont(new Font("Tahoma", Font.BOLD, 36));
@@ -353,10 +365,7 @@ public class concli {
 		btnclivoltar.setBounds(714, 443, 223, 53);
 		frame.getContentPane().add(btnclivoltar);
 		
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(589, 56, 86, 14);
-		frame.getContentPane().add(lblNewLabel);
-	
+		
 	}
 
 	
