@@ -1,26 +1,74 @@
 package Concessionaria;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.NumberFormat;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
-import javax.swing.JFormattedTextField;
 
 public class concon {
+// armazena a conexão
+	private Connection connection = null;
 
-	private JFrame frame;
+// armazena as consultas
+	private Statement statement = null;
+
+// armazena os resultados
+	private ResultSet resultset = null;
+
+	public void conectar() {
+
+// caminho
+		String servidor = "jdbc:mysql://localhost:3306/Concessionaria";
+
+// usuario
+		String usuario = "root";
+
+// senha
+		String senha = "arley911";
+
+// local driver instalado
+		String driver = "com.mysql.cj.jdbc.Driver";
+		try {
+
+// acessa o driver
+			Class.forName(driver);
+			this.connection = DriverManager.getConnection(servidor, usuario, senha);
+
+// consultas
+			this.statement = this.connection.createStatement();
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+	}
+
+	public boolean estaConectado() {
+		if (this.connection != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 // DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS DEFININDO CAMPOS
+	private JFrame frame;
+	
 	private JFormattedTextField concod;
+	private JTextArea connome;
 	private JFormattedTextField conadcli;
 	private JFormattedTextField conexcli;
 	private JFormattedTextField conadvei;
@@ -65,15 +113,10 @@ public class concon {
         try {
 		    MaskFormatter mask = new MaskFormatter("####");
 		    concod = new JFormattedTextField(mask);
-		    MaskFormatter mask1 = new MaskFormatter("####");
-		    conadcli = new JFormattedTextField(mask1);
-			MaskFormatter mask2 = new MaskFormatter("####");
-			conexcli = new JFormattedTextField(mask2);
-			MaskFormatter mask3 = new MaskFormatter("####");
-			conadvei = new JFormattedTextField(mask3);
-			MaskFormatter mask4 = new MaskFormatter("####");
-			conexvei = new JFormattedTextField(mask4);
-			MaskFormatter mask5 = new MaskFormatter("####");
+		    conadcli = new JFormattedTextField(mask);
+			conexcli = new JFormattedTextField(mask);
+			conadvei = new JFormattedTextField(mask);
+			conexvei = new JFormattedTextField(mask);
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "ERRO na formatação de Campos", "erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -101,11 +144,28 @@ public class concon {
 		labcodconform.setBounds(45, 139, 150, 28);
 		frame.getContentPane().add(labcodconform);
 		
-		//JTextArea concod = new JTextArea();
+		//concod = new JTextArea();
 		concod.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		concod.setBounds(180, 125, 104, 35);
 		frame.getContentPane().add(concod);
-				
+		concod.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				//String id = concod.getText();
+				atualizarInformacoes(concod.getText());
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				atualizarInformacoes(concod.getText());
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				atualizarInformacoes(concod.getText());
+			}
+		});
+
 // linha NOME CONSULTOR linha NOME CONSULTOR linha NOME CONSULTOR
 		JLabel labnomecon = new JLabel("Nome");
 		labnomecon.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -222,9 +282,13 @@ public class concon {
 		JButton btnassalvar = new JButton("Salvar");
 		btnassalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conini tel = new conini();
-				tel.visivel();
-				frame.dispose();
+				String id = concod.getText();
+				String nome = connome.getText();
+				if(verificarContato(id)) {
+					editarContato(id,nome);
+				}else {
+					inserirContato(id,nome);
+				}
 			}
 		});
 		btnassalvar.setFont(new Font("Tahoma", Font.BOLD, 36));
@@ -235,9 +299,9 @@ public class concon {
 		JButton btnasexcluir = new JButton("Excluir");
 		btnasexcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				conini tel = new conini();
-				tel.visivel();
-				frame.dispose();
+				String id = concod.getText();
+				apagarContato(id);
+				connome.setText("");
 			}
 		});
 		btnasexcluir.setFont(new Font("Tahoma", Font.BOLD, 36));
@@ -257,4 +321,71 @@ public class concon {
 		btnasvoltar.setBounds(718, 483, 223, 53);
 		frame.getContentPane().add(btnasvoltar);		
 	}
+	
+// BUSCAR BANCO DE DADOS E IMPRIMIR BUSCAR BANCO DE DADOS E IMPRIMIR
+	public void atualizarInformacoes(String id) {
+	try {
+		String query = "Select con_nome from COnsultor where con_id= '"+id+"'";
+		this.resultset = this.statement.executeQuery(query);
+		while (this.resultset.next()) {
+			String nome = this.resultset.getString("con_nome");
+			acenome.setText(nome);
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+	}
+// EDITAR DADOS EDITAR DADOS EDITAR DADOS EDITAR DADOS EDITAR DADOS EDITAR DADOS
+	public void editarContato(String con_id,String con_nome) {
+		try {
+			
+// aspas simple que � usado no mysql
+			String query = "update Consultor set con_nome ='"+connome+"' where con_id = '"+concod+"'";
+			this.statement.executeUpdate(query);
+		}catch(Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
+			}
+		}
+			
+// APAGAR ACESSORIO APAGAR ACESSORIO APAGAR ACESSORIO APAGAR ACESSORIO APAGAR ACESSORIO
+	public void apagarContato(String id) {
+		try {
+//aspas simple que � usado no mysql
+			String query = "delete from Consultor where ace_id ='"+id+"'";
+			this.statement.executeUpdate(query);
+		}catch(Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
+		}
+	}
+		
+// CADASTRAR OU ALTERAR O ACESSORIO CADASTRAR OU ALTERAR O ACESSORIO	
+	public boolean verificarContato(String id) {
+		try {
+			String query = "Select * from Consultor where con_id = '"+id+"'";
+			this.resultset = this.statement.executeQuery(query);
+			while (this.resultset.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		return false;
+	}
+	public void inserirContato(String id, String nome) {
+		try {
+	//aspas simple que � usado no mysql
+	String query = "insert into acessorios con_id,con_nome) values ('"+id+"','"+nome+"')";
+		this.statement.executeUpdate(query);
+		}catch(Exception e) {
+			System.out.println("ERROR: "+e.getMessage());
+		}
+	}
+		
+		
+		
+	
+	
+	
+		
+		
 }
